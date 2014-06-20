@@ -1,0 +1,29 @@
+<header class="header" role="banner">
+
+    <div id="inner-header" class="wrap clearfix">
+
+        <!-- Uncomment this block of HTML if you would like your logo to appear above the title.
+        Logo and Blog Title     -->
+        {{#if @blog.logo}}
+            <div id="logo">
+                <a href="{{@blog.url}}/"><img src="{{@blog.logo}}" alt="Logo"></a>
+            </div>
+        {{/if}}
+
+        <div id="site-title" class="h1">
+            <a href="{{@blog.url}}" rel="nofollow">{{@blog.title}}</a>
+        </div>
+
+        <!-- Site Description -->
+        <div id="site-description">
+            <h2>{{@blog.description}}</h2>
+        </div>
+
+        <!-- Coming Soon! -->
+        <nav id="site-navigation">
+            {{> navmenu}}
+        </nav>
+
+    </div> <!-- end #inner-header -->
+
+</header> <!-- end header -->

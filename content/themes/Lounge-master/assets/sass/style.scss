@@ -1,0 +1,687 @@
+/* ==================================================================== */
+/* Tablet of Contents */
+/* ==================================================================== */
+/*
+	1. Import Normalize
+	2. Variables
+	3. Mixins
+	4. HTML Tag Styling
+	5. Header
+	6. Main
+	7. Footer
+	8. Media Query for Screen & Device Widths below 801px 
+	9. Additional Classes for Styling
+*/
+
+
+/* ==================================================================== */
+/* 1. Import Normalize */
+/* ==================================================================== */
+
+@import "normalize";
+
+
+/* ==================================================================== */
+/* 2. Variables */
+/* ==================================================================== */
+/* Variables, which may cause damage to the layout, if improperly configured, have not been added! */
+
+/* The variables below can be configured, but have an impact on the entire site. */
+// Font Sizes
+$font-size: 125%;
+$font-size-int: 1.25; // Font Size as integer. Used for Mixins
+$fallback-font-size: 20px; // Define the font-size in pixels to add a fallback option for browser without REM support
+
+// Font Families
+$body-font-family: "Source Sans Pro", "Droid Sans", Helvetica, Arial, sans-serif;
+$header-font-family: "Bitter", "Arvo", serif; 
+$code-font-family: "Inconsolata", monospace, serif;
+
+// Colors
+$body-color: #222; // Possible Alternative: #26140a
+$link-color: #27977B; // Possible Alternative: #8a3601 
+$code-color: #8a3601;
+
+/* These colors are only used for the additional classes supplied with this theme. */
+$update-color: #4398E3; // blue
+$success-color: #3ABA54; // green
+$error-color: #D14F4C; // red
+$notice-color: #E3B924; // yellow
+
+
+/* ==================================================================== */
+/* 3. Mixins */
+/* ==================================================================== */
+
+/* Font Size REM Fallback */
+/* Enter only an integer value, without the "rem" */
+@mixin font-size($int) {
+	font-size: $int * $fallback-font-size;
+	font-size: $int * 1rem;
+}
+
+/* Margin REM Fallback */
+/* Enter only an integer value, without the "rem" */
+@mixin margin($margin-top, $margin-right, $margin-bottom, $margin-left) {
+	margin: $fallback-font-size*$margin-top $fallback-font-size*$margin-right $fallback-font-size*$margin-bottom $fallback-font-size*$margin-left;
+	margin: 1rem*$margin-top 1rem*$margin-right 1rem*$margin-bottom 1rem*$margin-left;
+}
+
+/* Padding REM Fallback */
+/* Enter only an integer value, without the "rem" */
+@mixin padding($padding-top, $padding-right, $padding-bottom, $padding-left) {
+	padding: $fallback-font-size*$padding-top $fallback-font-size*$padding-right $fallback-font-size*$padding-bottom $fallback-font-size*$padding-left;
+	padding: 1rem*$padding-top 1rem*$padding-right 1rem*$padding-bottom 1rem*$padding-left;
+}
+
+/* Height REM Fallback */
+/* Enter only an integer value, without the "rem" */
+@mixin height($int) {
+	height: $int * $fallback-font-size;
+	height: $int * 1rem;
+}
+
+/* Height REM Fallback */
+/* Enter only an integer value, without the "rem" */
+@mixin width($int) {
+	width: $int * $fallback-font-size;
+	width: $int * 1rem;
+}
+
+/* Minimum Height REM Fallback */
+/* Enter only an integer value, without the "rem" */
+@mixin min-height($int) {
+	min-height: $int * $fallback-font-size;
+	min-height: $int * 1rem;
+}
+
+/* Maximum Height REM Fallback */
+/* Enter only an integer value, without the "rem" */
+@mixin max-width($int) {
+	max-width: $int * $fallback-font-size;
+	max-width: $int * 1rem;
+}
+
+/* Border Radius support for multiple browsers */
+@mixin border-radius($rad) {
+	-webkit-border-radius: $rad;
+	-moz-border-radius: $rad;
+	border-radius: $rad;
+}
+
+/* Rotation support for multiple browsers */
+@mixin rotate($deg) {
+	-webkit-transform: rotate($deg);
+	-moz-transform: rotate($deg);
+	-ms-transform: rotate($deg);
+	-o-transform: rotate($deg);
+	transform: rotate($deg);
+}
+
+/* Transition support for multiple browsers */
+@mixin transition($time) {
+	-webkit-transition: $time ease;
+	-moz-transition: $time ease;
+	-ms-transition: $time ease;
+	-o-transition: $time ease;
+	transition: $time ease;
+}
+
+/* Specific Transition with additional property and easing variables */
+@mixin transition-spec($property, $time, $ease) {
+	-webkit-transition: $property $time $ease;
+	-moz-transition: $property $time $ease;
+	-ms-transition: $property $time $ease;
+	-o-transition: $property $time $ease;
+	transition: $property $time $ease;
+}
+
+/* Text Shadow with rgba option to modify opacity and set fallback */
+@mixin text-shadow($x, $y, $blur, $rgba-1, $rgba-2, $rgba-3, $opacity, $fallback) {
+	text-shadow: $x $y $blur $fallback;
+	text-shadow: $x $y $blur rgba($rgba-1, $rgba-2, $rgba-3, $opacity);
+}
+
+/* Box Shadow support for multiple browsers */
+@mixin box-shadow($x, $y, $blur, $spread, $color) {
+	-webkit-box-shadow: $x $y $blur $spread $color;
+	-moz-box-shadow: $x $y $blur $spread $color;
+	box-shadow: $x $y $blur $spread $color;
+}
+
+/* Multiple Box Shadows !MAX 2 */
+@mixin box-shadow-multi($x-1, $y-1, $blur-1, $spread-1, $color-1, $x-2, $y-2, $blur-2, $spread-2, $color-2) {
+	-webkit-box-shadow: $x-1 $y-1 $blur-1 $spread-1 $color-1, $x-2 $y-2 $blur-2 $spread-2 $color-2;
+	-moz-box-shadow: $x-1 $y-1 $blur-1 $spread-1 $color-1, $x-2 $y-2 $blur-2 $spread-2 $color-2;
+	box-shadow: $x-1 $y-1 $blur-1 $spread-1 $color-1, $x-2 $y-2 $blur-2 $spread-2 $color-2;
+}
+
+/* Box Shadow with rgba option to modify opacity and set fallback */
+@mixin box-shadow-rgba($x, $y, $blur, $spread, $rgba-1, $rgba-2, $rgba-3, $opacity, $fallback) {
+	-webkit-box-shadow: $x $y $blur $spread $fallback;
+	-moz-box-shadow: $x $y $blur $spread $fallback;
+	box-shadow: $x $y $blur $spread $fallback;
+	-webkit-box-shadow: $x $y $blur $spread rgba($rgba-1, $rgba-2, $rgba-3, $opacity);
+	-moz-box-shadow: $x $y $blur $spread rgba($rgba-1, $rgba-2, $rgba-3, $opacity);
+	box-shadow: $x $y $blur $spread rgba($rgba-1, $rgba-2, $rgba-3, $opacity);
+}
+
+/* Button styling for the default and supplied buttons */
+@mixin button($color) {
+	background: $color;
+	border: solid 1px darken($color, 8%);
+	-webkit-box-shadow: 0 2px 0 0 darken($color, 8%);
+	-moz-box-shadow: 0 2px 0 0 darken($color, 8%);
+	box-shadow: 0 2px 0 0 darken($color, 8%);
+	@include transition(0.3s);
+	&:hover {
+		color: darken(white, 8%);
+		text-decoration: none;
+		background: darken($color, 8%);
+	}
+}
+
+
+/* ==================================================================== */
+/* 4. HTML Tag Styling */
+/* ==================================================================== */
+
+/* HTML */
+html { 
+	font-size: $fallback-font-size; 
+	font-size: $font-size; 
+}
+/* Body */
+body { 
+	font-family: $body-font-family; 
+	font-weight: 400; 
+	line-height: 1.5; 
+	color: $body-color; 
+}
+/* Headings */
+h1,h2,h3,h4,h5,h6 { 
+	@include margin(2, 0, 0, 0);
+	font-family: $header-font-family;
+	font-weight: 400;
+	line-height: 1.2;
+	color: $body-color;
+}
+h1 {
+	@include font-size(2.5);
+}
+h2 {
+	@include font-size(2);
+}
+h3 {
+	@include font-size(1.5);
+}
+h4 {
+	@include font-size(1.25);
+}
+h5 {
+	@include font-size(1);
+}
+h6 {
+	@include font-size(0.875);
+}
+/* Paragraphs */
+p  { 
+	@include font-size(1);
+	@include margin(1, 0, 1, 0);
+}
+/* Links */
+a  { 
+	color: $link-color;
+	text-decoration: none;
+	@include transition(0.3s);
+}
+a:hover { 
+	color: $body-color;
+	text-decoration: underline;
+}
+/* Images and Videos */
+img, video {
+	max-width: 100%;
+}
+/* Lists */
+ul, ol {
+	ul, ol {
+		@include margin(0.25, 0, 0.25, 0);
+	}
+}
+/* Blockquotes */
+blockquote { 
+	@include margin(1, 0, 1, 1);
+	@include padding(0, 1, 0, 1);
+	color: #666; 
+	border-left: 4px solid #ccc;
+}
+/* Quotes */
+q {
+	font-style: italic;
+}
+/* Code Blocks */
+pre { 
+	code {
+		@include padding(0.75, 1, 0.75, 1);
+		line-height: 1.2;
+		display: block;
+	}
+	@include margin(1, 0, 0, 0);
+}
+/* Inline Code */
+code {
+	@include font-size(0.875);
+	@include padding(0.2, 0.2, 0.2, 0.2);
+	font-family: $code-font-family;
+	color: $code-color;
+	background: white;
+	border: 1px solid #eee;
+	@include border-radius(4px);
+}
+/* Labels */
+label {
+	@include margin(0, 0, 0.25, 0);
+	display: inline-block;
+}
+/* Input and Textareas */	
+input, textarea {
+	line-height: 1.5;
+	color: $body-color;
+	width: 240px;
+	max-width: 96%;
+	padding: 1% 2%;
+	display: block;
+	border: 1px solid #eee;
+	outline: none;
+	@include border-radius(4);
+	@include transition-spec(box-shadow, 0.2s, ease);
+	&:active, &:focus {
+		@include box-shadow(0, 0, 4px, 0, $link-color);
+	}
+}
+/* Textarea Specific */
+textarea {
+	@include min-height(6);
+}
+/* Horizontal Rules */
+hr {
+	@include margin(1.5, 0, 1.5, 0);
+	border: none;
+	border-top: 1px solid #ccc;
+}
+/* Buttons, Submit Inputs and Links with Button Classes */
+button, input[type="submit"], a.button {
+	@include margin(0.5, 0, 0.5, 0);
+	@include padding(0.5, 1.2, 0.5, 1.2);
+	line-height: 1.2;
+	color: white;
+	text-decoration: none;
+	text-shadow: 0 0 0;
+	width: auto;
+	display: inline-block;
+	cursor: pointer;
+	outline: none;	
+	@include border-radius(4px);
+	@include button($link-color);
+}
+
+
+/* ==================================================================== */
+/* 5. Header */
+/* ==================================================================== */
+
+header#site-head {
+	background: #26140a; 
+	div.vertical {
+		div#site-head-content {
+			padding: 15% 0; // Increases vertical spacing to enlargen Header & center the content
+			width: 100%;
+			text-align: center;
+		}
+	}
+}
+
+/* ==================================== */
+/* Blog Logo */
+/* ==================================== */
+a#blog-logo {
+	img {
+		@include margin(0, 1.5, 0, 1.5);
+		border: 4px solid white;
+		@include box-shadow-rgba(1px, 1px, 2px, 0, 0, 0, 0, 0.4, #222); 
+		@include transition(0.6s); // Transition required for animation
+		&:hover {
+			@include rotate(360deg); // Spin the image by 360 degrees on hover
+		}
+	}
+}
+
+/* ==================================== */
+/* Blog Title */
+/* ==================================== */
+h1.blog-title {
+	@include font-size(3);
+	@include margin(0.5, 1.5, 0.5, 1.5);
+	@include text-shadow(1px, 1px, 2px, 0, 0, 0, 0.6, #222);
+	a {
+		font-family: $header-font-family;
+		font-weight: 300;
+		color: #fff;
+		&:hover {
+			color: #fff;
+			text-decoration: none;
+		}
+	}
+}
+
+/* ==================================== */
+/* Blog Description */
+/* ==================================== */
+h2.blog-description {
+	@include font-size(1.5);
+	@include margin(0, 1.5, 0, 1.5);
+	font-family: $body-font-family;
+	font-weight: 300;
+	color: #fff;
+	padding: 0;
+	@include text-shadow(1px, 1px, 2px, 0, 0, 0, 0.6, #222);
+}
+
+
+/* ==================================================================== */
+/* 6. Main */
+/* ==================================================================== */
+
+/* Container to store articles */
+/* Notice: Do not change the background color using main.content! */
+/* It will leave a remain of the body tag's background on the bottom. */
+/* Use the body tag to change this property's value instead. */
+main.content {
+	@include padding(3, 0, 3, 0);
+	margin: 0 auto;
+	text-shadow: 0 1px 0 #fff; 
+	background: #fffcf3 url(../imgs/bg.jpg); 
+	@include box-shadow-rgba(0, -2px, 2px, 0, 0, 0, 0, 0.1, #666);
+	article {
+		@include max-width(40);
+		margin: 0 auto;
+		width: auto;
+		background: #fff url(../imgs/bg-article.jpg);
+		@include box-shadow-multi(0, 2px, 0, 0, #4f3323, 0, 0, 2px, 0, #ccc);
+	}
+}
+
+/* ==================================== */
+/* Displayed in every Article */
+/* ==================================== */
+/* Date and Tags */
+div.post-meta {
+	@include margin(0, 0, 2.5, 0);
+	@include height(1);
+	font-family: $header-font-family;
+	text-align: center;
+	color: #ccc;
+	width: 100%;
+	border-bottom: 2px solid #e5e5e5;
+	cursor: default;
+	@include box-shadow(0, 1px, 0, 0, #fff);
+	time {
+		@include font-size(1.5);
+		@include padding(0, 0.5, 0, 0.5);
+		font-weight: 300;
+		background: #fff url(../imgs/bg-article.jpg);
+	}	
+	p.post-tags {
+		padding: 0;
+		margin: 0;
+		font-family: $header-font-family;
+		text-align: center;
+		color: #ccc;
+	}
+}
+
+/* ==================================== */
+/* Display only on Index */
+/* ==================================== */
+/* Index: Post Titles */
+h2.post-title {
+	@include margin(0, 1.5, 0.5, 1.5);
+	@include padding(0.75, 0, 0, 0);
+	font-weight: 300;
+	text-align: center;
+	word-wrap: break-word;
+	cursor: default;
+	a {
+		color: $body-color;
+		text-decoration: none;
+		&:hover {
+			color: $link-color;
+		}
+	}
+}
+/* Index: Post Excerpt */
+section.post-excerpt {
+		@include padding(1.5, 1.5, 1.5, 1.5);
+		line-height: 1.5;
+	p {
+		margin: 0;
+	}
+} 
+
+/* ==================================== */
+/* Displayed only in the single Post */
+/* ==================================== */
+/* Post: Post Title  */
+h1.post-title {
+	@include margin(0, 0, 1, 0);
+	@include padding(1, 1.5, 0, 1.5);
+	font-weight: 300;
+	text-align: center;
+	word-wrap: break-word;
+	cursor: default;
+}
+/* Post: Post Content  */
+section.post-content {
+	@include padding(0.5, 1.5, 0, 1.5);
+}
+
+/* ==================================== */
+/* Post Footer */
+/* ==================================== */
+footer.post-footer {
+	@include font-size(0.875);
+	@include padding(2, 0, 2, 0);
+	@include margin(3, 1.5, 0, 1.5);
+	border-top: 1px solid #ccc;
+	h4 {
+		@include font-size(1);
+		@include margin(0, 0, 0.75, 0);
+		cursor: default;
+	}
+	p {
+		@include font-size(0.875);
+		margin: 0;
+		text-align: justify;
+	}
+}
+/* Post Author  */
+section.author {
+	@include width(27);
+	display: inline-block;
+	float: left;
+}
+/* Share Post  */
+section.share {
+	@include margin(0, 0, 0, 2);
+	@include padding(0, 0, 3, 0);
+	@include width(8);
+	display: inline-block;
+	i {
+		@include font-size(1.25);
+		@include height(1);
+		@include width(1);
+		text-align: center;
+	}
+	a.icon-twitter {
+		@include margin(0.25, 0.5, 0, 0.5);
+		color: #4099FF;
+		&:hover {
+			color: darken(#4099FF, 16%)
+		}
+	}
+	a.icon-facebook {
+		@include margin(0.25, 0.5, 0, 0.5);
+		color: #3B5998;
+		&:hover {
+			color: darken(#3B5998, 16%)
+		}
+	}
+	a.icon-google-plus {
+		@include margin(0.25, 0.5, 0, 0.5);
+		color: #D34836;
+		&:hover {
+			color: darken(#D34836, 16%)
+		}
+	}
+}
+
+/* ==================================== */
+/* Horizontal Rule blow each Article */
+/* ==================================== */
+hr.border-top, hr.border-bottom {
+	@include max-width(40);
+	width: auto;
+	border: none;
+}
+/* hr.border-top creates the top margin and hr lines */
+hr.border-top {
+	margin: 3*$fallback-font-size auto 0 auto; // Top Margin
+    text-align: center;
+    border-bottom: 2px solid #e2dcd3; // hr line
+}
+/* hr.body-bottom is only used for margin on the bottom and adding the circle into the center of the hr */
+hr.border-bottom {
+	@include height(1);
+	margin: 0.5*$fallback-font-size auto 2.5*$fallback-font-size auto;
+	margin: -0.5rem auto 2.5rem auto;
+	background: url(../imgs/circle-border.png) center no-repeat; // Circle IMage
+}
+/* Index Pagination */
+nav.pagination {
+	@include padding(0, 0, 0.25, 0);
+	width: 100%;
+	text-align: center;
+	display: inline-block;
+	cursor: default;
+	span {
+		font-family: $header-font-family;
+		color: #aaa;
+		display: block;
+	}
+}
+
+
+/* ==================================================================== */
+/* 7. Footer */
+/* ==================================================================== */
+
+footer.site-footer {
+	@include margin(0, 0, 0, 0);
+	@include padding(2.75, 0, 2.75, 0);
+	text-align: center;
+	width: 100%;
+	float: left;
+	background: #eae3d9 url(../imgs/bg-footer.jpg);
+	text-shadow: 0 1px 0 #fff;
+	div.inner {
+		@include font-size(0.875);
+		@include margin(2.375, 0, 0, 0);
+		font-family: $body-font-family;
+		line-height: 1.5;
+		text-align: center;
+		color: $body-color;
+		a {
+			text-decoration: none;
+			color: $body-color;
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+}
+
+/* ==================================== */
+/* RSS Feed Subscription */
+/* ==================================== */
+a.subscribe {
+	@include height(2); // Required to display image properly. If too low, the image may be cut off.
+	@include margin(-3.75, 0, 0, 0); // The top margin is calculated by adding the top padding of the site-footer container to the half of this element's height and setting it negative.
+	display: block;
+	background: url(../imgs/rss.png) center no-repeat;
+}
+
+/* ==================================================================== */
+/* 8. Media Queries for Screen & Device Widths below 801px */
+/* ==================================================================== */
+
+@media only screen and (max-device-width : 800px), only screen and (max-width : 800px) {
+	/* Stack the Author Biography on the Sharing Options in the Post Footer */
+	main.content {
+		article {
+			footer.post-footer {
+				section.author {
+					width: 100%;
+				}
+				section.share {
+					@include margin(2, 0, 0, 0);
+					width: 100%;
+				}
+			}
+		}
+	}
+	div.vertical {
+		/* Background Fix */
+		/* Set the Header Background Image to scroll, in order to display properly on small screens */
+		background-attachment: scroll !important;
+	}
+}
+
+/* ==================================================================== */
+/* 9. Additional Classes for Styling */
+/* ==================================================================== */
+
+/* Custom Buttons */
+button.update, a.update {
+	@include button($update-color);
+}
+button.success, a.success {
+	@include button($success-color);
+}
+button.error, a.error {
+	@include button($error-color);
+}
+button.notice, a.notice {
+	@include button($notice-color);
+}
+
+/* Message Boxes */
+p.message {
+	@include padding(0.5, 0.875, 0.5, 0.875);
+	background: white;
+	border: 1px solid #eee;
+	border-top: 4px solid $link-color;
+	@include border-radius(4px);
+}
+p.update {
+	border-top: 4px solid $update-color;
+}
+p.success {
+	border-top: 4px solid $success-color;
+}
+p.error {
+	border-top: 4px solid $error-color;
+}
+p.notice {
+	border-top: 4px solid $notice-color;
+}

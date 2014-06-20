@@ -1,0 +1,55 @@
+{{!< default}}
+
+{{! The comment above "< default" means - insert everything in this file into
+    the {body} of the default.hbs template, which contains our header/footer. }}
+
+{{! The big featured header on the homepage, with the site logo and description }}
+<header id="site-head">
+     <div class="vertical" {{#if @blog.cover}}style="background: url({{@blog.cover}}) center center fixed no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;"{{/if}}>
+        <div id="site-head-content" class="inner">
+
+            {{#if @blog.logo}}<a id="blog-logo" href="{{@blog.url}}"><img src="{{@blog.logo}}" alt="Blog Logo" /></a>{{/if}}
+            <h1 class="blog-title"><a href="{{@blog.url}}">{{@blog.title}}</a></h1>
+            <h2 class="blog-description">{{@blog.description}}</h2>
+        </div>
+    </div>
+</header>
+
+{{! The main content area on the homepage }}
+<main class="content fluid-wrapper" role="main">
+
+    {{! Each post will be output using this markup }}
+    {{#foreach posts}}
+
+    <div class="each-article">
+        <article class="{{post_class}}">
+            <header class="post-header">
+                <h2 class="post-title"><a href="{{url}}">{{{title}}}</a></h2>
+                <div class="post-meta"><time datetime="{{date format='YYYY-MM-DD'}}">{{date format="DD MMM YYYY"}}</time> <p class="post-tags">{{#if tags}}on {{tags}}{{/if}}</p></div>
+
+            </header>
+            <section class="post-excerpt">
+                <p>{{excerpt}}&hellip;</p>
+            </section>
+        </article>
+
+        <hr class="border-top">
+        <hr class="border-bottom">
+    </div>
+
+     <script type='text/javascript'>
+        var article = document.querySelectorAll(".each-article"),
+            articleLen = article.length,
+            i;
+
+            for (i=0; i<articleLen; i++) {
+                article[i].style.opacity="0";
+                article[i].style.paddingTop="40px";
+            }
+    </script>
+
+    {{/foreach}}
+    {{!! After all the posts, we have the previous/next pagination links }}
+    {{pagination}}
+
+</main>
